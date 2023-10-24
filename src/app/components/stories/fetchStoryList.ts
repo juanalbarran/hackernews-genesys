@@ -17,9 +17,9 @@ function getItemUrl(itemId: number) {
   return `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`;
 }
 
-export async function fetchStoryList(): Promise<Story[]> {
+export async function fetchStoryList(start: number, end: number): Promise<Story[]> {
   try {
-    const storyIds: number[] = await fetchStoryIds();
+    const storyIds: number[] = await fetchStoryIds(start, end);
     const stories: Story[] = await Promise.all(storyIds.map(async (storyId: number) => {
       const story: Story = await fetchStory(storyId);
       return story;
@@ -30,11 +30,11 @@ export async function fetchStoryList(): Promise<Story[]> {
   }
 }
 
-async function fetchStoryIds(): Promise<number[]> {
+async function fetchStoryIds(start: number, end: number): Promise<number[]> {
   try {
     const response: Response = await fetch(topStoriesUrl);
     const data: number[] = await response.json();
-    return data;
+    return data.slice(start, end);
   } catch (error: any) {
     throw new Error("Error: ", error.message);
   }
