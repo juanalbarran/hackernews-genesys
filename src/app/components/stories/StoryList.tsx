@@ -1,18 +1,30 @@
 import { FC } from 'react';
 import dayjs, { Dayjs } from "dayjs";
-import { Box, Card, Container, Grid, Text } from '@radix-ui/themes';
+import { Box, Card, Container, Flex, Grid, Text } from '@radix-ui/themes';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { fetchStoryList } from './fetchStoryList';
 import { Story } from './story';
 import { StoryCardItem } from './StoryCardItem';
+import Pagination from './Pagination';
 
-const StoryList: FC = async () => {
+interface StoryListProps {
+  start: number;
+  end: number;
+}
 
-  const stories: Story[] = await fetchStoryList();
+const StoryList: FC<StoryListProps> = async ({ start, end }) => {
+
+  const stories: Story[] = await fetchStoryList(start, end);
 
   return (
-    <Container width={"auto"} >
+    <Flex direction={"column"} gap={"5"}>
+      <Container width={"auto"}>
+        <Flex direction={"row-reverse"}>
+          <Pagination hasNextPage={end < 500} hasPrevPage={start > 0}/>
+        </Flex>
+      </Container>
+      <Container width={"auto"} >
         <Grid align={"center"} gap={"3"} columns={"1"} width={"auto"}>
           {stories?.map((story: Story, index: number) => {
 
@@ -24,7 +36,7 @@ const StoryList: FC = async () => {
               <Card asChild key={story.id} style={{flex: 1, padding: 5}}>
                 <a href={story.url}>
                   <Grid gap={"3"} columns={"23"} align={"center"}>
-                    <StoryCardItem type="number" value={`${index + 1}`}/>
+                    <StoryCardItem type="number" value={`${index + start + 1}`}/>
                     <Box className="col-span-12">
                       <Text size={"2"} as="div" weight={"regular"}>
                         {story.title}
@@ -41,6 +53,12 @@ const StoryList: FC = async () => {
           })}
         </Grid>
       </Container>
+      <Container width={"auto"}>
+        <Flex direction={"row-reverse"}>
+          <Pagination hasNextPage={end < 500} hasPrevPage={start > 0}/>
+        </Flex>
+      </Container>
+    </Flex>
   )
 }
 
