@@ -1,7 +1,10 @@
-export default function Home() {
+import StoryList from './components';
+
+export default async function Home() {
+
   return (
     <main>
-      Hola :)
+      <StoryList />
     </main>
   )
 }
