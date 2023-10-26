@@ -1,22 +1,28 @@
-export const TIME: string = 'time';
-export const SCORE: string = 'score';
-export const USER: string = 'user';
-export const COMMENT: string = 'comment';
-export const NUMBER: string = 'number';
+export const ITEM_TYPE = {
+  TIME: 'time',
+  SCORE: 'score',
+  USER: 'user',
+  COMMENT: 'comment',
+  NUMBER: 'number',
+}
 
 export function getColSpan(type: string) {
 
-  const COL_SPAN_3: string = 'col-span-3';
+  const COL_SPAN_TYPES = {
+    COL_SPAN_1: 'col_span_1',
+    COL_SPAN_2: 'col_span_2',
+    COL_SPAN_3: 'col_span_3',
+  }
 
   switch (type) {
-    case NUMBER:
-      return 'col-span-1';
-    case USER:
-      return COL_SPAN_3;
-    case TIME:
-      return COL_SPAN_3;
+    case ITEM_TYPE.NUMBER:
+      return COL_SPAN_TYPES.COL_SPAN_1;
+    case ITEM_TYPE.USER:
+      return COL_SPAN_TYPES.COL_SPAN_3;
+    case ITEM_TYPE.TIME:
+      return COL_SPAN_TYPES.COL_SPAN_3;
     default:
-      return 'col-span-2';
+      return COL_SPAN_TYPES.COL_SPAN_2;
   }
 }
 
@@ -26,11 +32,11 @@ export function getAlign(type: string) {
   const START = 'start';
 
   switch(type) {
-    case SCORE:
+    case ITEM_TYPE.SCORE:
       return CENTER;
-    case COMMENT:
+    case ITEM_TYPE.COMMENT:
       return CENTER;
-    case TIME:
+    case ITEM_TYPE.TIME:
       return CENTER;
     default:
       return START;

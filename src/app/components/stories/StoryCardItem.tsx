@@ -6,7 +6,7 @@ import {
   ChevronDoubleUpIcon,
 } from "@heroicons/react/20/solid";
 import { Flex, Text } from "@radix-ui/themes";
-import { COMMENT, NUMBER, SCORE, TIME, USER, getAlign, getColSpan } from "./utils";
+import { ITEM_TYPE, getAlign, getColSpan } from "./utils";
 
 interface StoryCardItemProps {
   type: 'time' | 'score' | 'user' | 'comment' | 'number',
@@ -27,17 +27,17 @@ export function StoryCardItem( props: StoryCardItemProps ) {
   )
 }
 
-export function getSvg(type: string) {
+function getSvg(type: string) {
   switch (type) {
-    case TIME:
+    case ITEM_TYPE.TIME:
       return <ClockIcon height={"15"}/>;
-    case SCORE:
+    case ITEM_TYPE.SCORE:
       return <ChevronDoubleUpIcon height={"15"}/>;
-    case USER:
+    case ITEM_TYPE.USER:
       return <UserIcon height={"15"}/>;
-    case COMMENT:
+    case ITEM_TYPE.COMMENT:
       return <ChatBubbleLeftIcon height={"15"}/>;
-    case NUMBER:
+    case ITEM_TYPE.NUMBER:
       return <DocumentTextIcon height={"15"} className="text-orange-400"/>;
   }
 }

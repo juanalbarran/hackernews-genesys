@@ -30,7 +30,7 @@ export async function fetchStoryList(start: number, end: number): Promise<Story[
   }
 }
 
-async function fetchStoryIds(start: number, end: number): Promise<number[]> {
+export async function fetchStoryIds(start: number, end: number): Promise<number[]> {
   try {
     const response: Response = await fetch(topStoriesUrl);
     const data: number[] = await response.json();
@@ -40,7 +40,7 @@ async function fetchStoryIds(start: number, end: number): Promise<number[]> {
   }
 }
 
-async function fetchStory(itemId: number): Promise<Story> {
+export async function fetchStory(itemId: number): Promise<Story> {
   try{
     const response: Response = await fetch(getItemUrl(itemId));
     const data: any = await response.json();
