@@ -18,7 +18,7 @@ export default async function Home({
   return (
     <main>
       <Flex direction={'column'} gap={'4'}>
-        <Header/>
+        <Header />
         <StoryList start={start} end={end}/>
         <Footer />
       </Flex>
