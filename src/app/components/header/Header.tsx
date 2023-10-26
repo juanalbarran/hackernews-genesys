@@ -13,7 +13,9 @@ const Header: FC = () => {
             fallback="" 
             src="https://play-lh.googleusercontent.com/S-jC2RtBE_9A29myfMZgU22AwF-eITjCBBMEf4YIqXODDiazO6fOhzw243IFCxytLDE=w240-h480-rw"
           />
-          <Text as="div" align="left" color={"orange"} size={"7"}>HackerNews</Text>            
+          <Text as="p" align="left" color={"orange"} size={"7"}>
+            HackerNews
+          </Text>            
         </Flex>
       </Container>
       <Container pb={"4"} width={"auto"}>
