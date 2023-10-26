@@ -6,7 +6,7 @@ import {
   ChevronDoubleUpIcon,
 } from "@heroicons/react/20/solid";
 import { Flex, Text } from "@radix-ui/themes";
-import { ITEM_TYPE, getAlign, getColSpan } from "./utils";
+import { ITEM_TYPE, getAlign } from "./utils";
 
 interface StoryCardItemProps {
   type: 'time' | 'score' | 'user' | 'comment' | 'number',
@@ -18,7 +18,7 @@ export function StoryCardItem( props: StoryCardItemProps ) {
   const {type, value} = props;
 
   return (
-    <Flex direction={"row"} gap={"2"} align={"center"} justify={getAlign(type)} className={getColSpan(type)}>
+    <Flex direction={"row"} gap={"2"} align={"center"} justify={getAlign(type)} >
       { getSvg(type) }
       <Text size={"1"} as="div" color="gray" weight={"light"}>
         {value}
