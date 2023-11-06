@@ -1,4 +1,5 @@
 import { Story } from "./story";
+import { checkResponse, handleError } from "./utils";
 
 const topStoriesUrl: string = 'https://hacker-news.firebaseio.com/v0/newstories.json';
 
@@ -25,32 +26,34 @@ export async function fetchStoryList(start: number, end: number): Promise<Story[
       return story;
     }));
     return stories;
-  } catch (error: any) {
-    throw new Error("Error: ", error.message);
+  } catch (error: unknown) {
+    throw new Error(handleError(error));
   }
 }
 
 export async function fetchStoryIds(start: number, end: number): Promise<number[]> {
   try {
     const response: Response = await fetch(topStoriesUrl);
+    checkResponse(response);
     const data: number[] = await response.json();
     return data.slice(start, end);
-  } catch (error: any) {
-    throw new Error("Error: ", error.message);
+  } catch (error: unknown) {
+    throw new Error(handleError(error));
   }
 }
 
 export async function fetchStory(itemId: number): Promise<Story> {
   try{
     const response: Response = await fetch(getItemUrl(itemId));
+    checkResponse(response);
     const data: any = await response.json();
     return fillStory(data);
-  } catch (error: any) {
-    throw new Error("Error: ", error.message);
+  } catch (error: unknown) {
+    throw new Error(handleError(error));
   }
 }
 
-function fillStory(story: StoryDO): Story {
+export function fillStory(story: StoryDO): Story {
   return {
     by: story.by,
     descendants: story.descendants,

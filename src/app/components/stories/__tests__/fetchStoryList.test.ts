@@ -13,30 +13,58 @@ const mockStory: Story = {
 };
 const mockIds: number[] = [1];
 
-describe('fetchStoryList', () => {
+function mockFetchResolve(result: any) {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(result),
+    })
+  ) as jest.Mock;
+}
 
+function mockFetchFail() {
+  global.fetch = jest.fn(() => 
+    Promise.resolve({
+      ok: false,
+      status: 500,
+      json: Promise.resolve('Yo soy maelo el incomprendido'),
+    })
+  ) as jest.Mock;
+}
+
+describe('fetchStoryList', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return a list of number', async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockIds),
-      })
-    ) as jest.Mock;
+  it('should return a list of number when fetchStoryIds is called', async () => {
+    mockFetchResolve(mockIds);
     const ids: number[] = await fetchStoryIds(0, 1);
     expect(ids).toEqual(mockIds)
   });
 
-  it('should return a story', async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockStory),
-      })
-    ) as jest.Mock;
+  it('should throw an Error when fetchStoryIds is called', async () => {
+    mockFetchFail()
+    try {
+      await fetchStoryIds(0,1);
+    } catch (error) {
+      expect(error instanceof Error).toBe(true);
+    }
+  });
+
+  it('should return a story when fetchStory is called', async () => {
+    mockFetchResolve(mockStory);
     const story: Story = await fetchStory(1);
     expect(story).toEqual(mockStory);
+  });
+
+  it('should throw an Error when fetchStory is called', async () => {
+    mockFetchFail();
+    try {
+      await fetchStory(1);
+    } catch (error) {
+      expect(error instanceof Error).toBe(true);
+    }
   });
 
 });
